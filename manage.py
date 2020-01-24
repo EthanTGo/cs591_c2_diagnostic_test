@@ -4,9 +4,12 @@
 import os
 import unittest
 import coverage
+import json
 
+from flask import Flask, render_template, url_for, request, redirect
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from project.server.models import User
 
 COV = coverage.coverage(
     branch=True,
@@ -68,6 +71,19 @@ def create_db():
 def drop_db():
     """Drops the db tables."""
     db.drop_all()
+
+@app.route("/users/index")
+def home():
+    list_user = db.session.query(User).all()
+    listing = []
+    for i in list_user:
+        temp = {}
+        temp["email"] = i.email
+        listing.append(temp)
+    # return render_template('home.html', result=str(listing))
+    return str(listing)
+        
+
 
 
 if __name__ == '__main__':

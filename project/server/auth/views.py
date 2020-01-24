@@ -8,6 +8,9 @@ from project.server.models import User
 
 auth_blueprint = Blueprint('auth', __name__)
 
+
+
+
 class RegisterAPI(MethodView):
     """
     User Registration Resource
